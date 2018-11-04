@@ -4,10 +4,8 @@ namespace App\Entity;
 
 use App\Library\logger\Logger;
 use App\Service\ScraperService;
-use App\Service\DomainService;
 use App\ValueObject\Url;
 use App\ValueObject\UrlCollection;
-use App\Service\Storage\StorageService;
 use App\Repository;
 use App\ValueObject\UrlQueue;
 
@@ -17,10 +15,6 @@ class Pilgrim
     private $logger;
 
     private $scraperService;
-
-    private $domainService;
-
-    private $storageService;
 
     private $repository;
 
@@ -34,12 +28,10 @@ class Pilgrim
 
     private $destinations;
 
-    public function __construct(Logger $logger, ScraperService $scraperService, DomainService $websiteService, StorageService $storageService, Repository $repository)
+    public function __construct(Logger $logger, ScraperService $scraperService, Repository $repository)
     {
         $this->logger = $logger;
         $this->scraperService = $scraperService;
-        $this->domainService = $websiteService;
-        $this->storageService = $storageService;
         $this->repository = $repository;
         $this->scraperQueue = $this->repository->getScraperQueue();
         $this->currentDomain = $this->repository->getCurrentDomain();
@@ -51,35 +43,21 @@ class Pilgrim
     public function run()
     {
         if (false === $this->scraperQueue->isEmpty()) {
-            echo "ScraperQueue not empty (" . count($this->scraperQueue->getIterator()) . ")\n";
             $currentUrl = $this->scraperQueue->dequeue();
-            echo "Scraping  $currentUrl\n";
+            
             $scrapedUrls = $this->scraperService->extractUrls($currentUrl, $this->currentDomain);
-            foreach ($scrapedUrls as $url) {
-                
-                if (true === $this->isLocalUrl($url)) {
-                    if (false === $this->scraperQueue->contains($url) && false === $this->scraperHistory->contains($url)) {
-                        echo "Adding local Url $url\n";
-                        $this->scraperQueue->enqueue($url);
-                    }
-                    continue;
-                }
-                if (false === $this->destinations->contains($url)) {
-                    echo "Adding destination Url $url\n";
-                    $this->destinations->add($url);
-                }
-            }
+            $this->addUrlsToScraperQueue($this->extractLocalUrls($scrapedUrls));
+            $this->addUrlsToDestinations($this->extractExternalUrls($scrapedUrls));
+            
             $this->scraperHistory->add($currentUrl);
             $this->persist();
             return;
         }
         
-        echo "ScraperQueue empty\n";
-        
         try {
             $destination = $this->destinations->getRandom();
         } catch (\Exception $e) {
-            $destination = $this->domainHistory->getLast();
+            $destination = $this->domainHistory->getPrevious();
         }
         $this->setNewDestination($destination);
         $this->persist();
@@ -112,6 +90,48 @@ class Pilgrim
         }
         
         return false;
+    }
+
+    private function extractLocalUrls(UrlCollection $scrapedUrls): UrlCollection
+    {
+        $localUrls = UrlCollection::create();
+        foreach ($scrapedUrls as $url) {
+            if (true === $this->isLocalUrl($url)) {
+                $localUrls->add($url);
+            }
+        }
+        
+        return $localUrls;
+    }
+
+    private function extractExternalUrls(UrlCollection $scrapedUrls): UrlCollection
+    {
+        $externalUrls = UrlCollection::create();
+        foreach ($scrapedUrls as $url) {
+            if (false === $this->isLocalUrl($url)) {
+                $externalUrls->add($url);
+            }
+        }
+        
+        return $externalUrls;
+    }
+
+    private function addUrlsToScraperQueue(UrlCollection $urls)
+    {
+        foreach ($urls as $url) {
+            if (false === $this->scraperQueue->contains($url) && false === $this->scraperHistory->contains($url)) {
+                $this->scraperQueue->enqueue($url);
+            }
+        }
+    }
+
+    private function addUrlsToDestinations(UrlCollection $urls)
+    {
+        foreach ($urls as $url) {
+            if (false === $this->destinations->contains($url)) {
+                $this->destinations->add($url);
+            }
+        }
     }
 }
 

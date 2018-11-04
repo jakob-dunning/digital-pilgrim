@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types = 1);
 namespace App\Service;
 
 use App\Library\Logger\Logger;
@@ -155,17 +157,19 @@ class ScraperService
         
         return false;
     }
-    
-    private function removeQueryString(string $url) : string {
-        if(strpos($url, '?') !== false) {
+
+    private function removeQueryString(string $url): string
+    {
+        if (strpos($url, '?') !== false) {
             $url = strstr($url, '?', true);
         }
         
         return $url;
     }
-    
-    private function removeNamedAnchor(string $url) : string {
-        if(strpos($url, '#') !== false) {
+
+    private function removeNamedAnchor(string $url): string
+    {
+        if (strpos($url, '#') !== false) {
             $url = strstr($url, '#', true);
         }
         

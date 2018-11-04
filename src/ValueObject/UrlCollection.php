@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types = 1);
 namespace App\ValueObject;
 
 use App\Library\Ensure;
@@ -29,7 +31,7 @@ class UrlCollection implements \IteratorAggregate, \JsonSerializable
         return $this->store[rand(0, count($this->store) - 1)];
     }
 
-    public function createFromArray(array $values): self
+    public static function createFromArray(array $values): self
     {
         $urlCollection = new self();
         foreach ($values as $value) {
@@ -47,7 +49,7 @@ class UrlCollection implements \IteratorAggregate, \JsonSerializable
     public function contains(Url $url)
     {
         foreach ($this->store as $storedUrl) {
-            if ((string)$url === (string)$storedUrl) {
+            if ((string) $url === (string) $storedUrl) {
                 return true;
             }
         }
@@ -60,7 +62,7 @@ class UrlCollection implements \IteratorAggregate, \JsonSerializable
         return $this->store;
     }
 
-    public function getLast()
+    public function getPrevious()
     {
         $this->ensureIsNotEmptyArray($this->store);
         

@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types = 1);
 namespace App\ValueObject;
 
 use App\Library\Ensure;
@@ -12,16 +14,17 @@ class File
     private function __construct(string $path)
     {
         $this->ensurePathExists($path);
-       
+        
         $this->path = $path;
     }
 
-    public static function createFromString(string $path) : self
+    public static function createFromString(string $path): self
     {
         return new self($path);
     }
-    
-    public function getPath() : string {
+
+    public function getPath(): string
+    {
         return $this->path;
     }
 }

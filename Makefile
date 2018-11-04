@@ -2,4 +2,4 @@ run:
 	php -f src/Cli/worker.php
 	
 test:
-	phpunit tests --coverage-html tmp/
+	vendor/phpunit/phpunit/phpunit --coverage-html tmp/coverage/

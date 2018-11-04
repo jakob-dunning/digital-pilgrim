@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types = 1);
 namespace App\Service\Storage;
 
 use App\Library\Ensure;
@@ -26,18 +28,16 @@ class FilestorageService implements StorageService
         $filePath = (string) $this->storageFolder . $storageItem->getKey() . '.json';
         $tmpFilePath = (string) $this->storageFolder . '~' . $storageItem->getKey() . '.json';
         
-        $this->ensurePathIsWritable($this->storageFolder);
-
+        $this->ensurePathIsWritable((string)$this->storageFolder);
+        
         if (true === file_exists($filePath)) {
             $this->ensurePathIsWritable($filePath);
-            file_put_contents($tmpFilePath,  (string)$storageItem);
+            file_put_contents($tmpFilePath, (string) $storageItem);
             unlink($filePath);
             rename($tmpFilePath, $filePath);
         } else {
-            file_put_contents($filePath,  (string)$storageItem);
+            file_put_contents($filePath, (string) $storageItem);
         }
-        
-        
         
         return;
     }

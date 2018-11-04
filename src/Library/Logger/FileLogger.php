@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types = 1);
 namespace App\Library\Logger;
 
 use App\Library\Ensure;
@@ -26,7 +28,7 @@ class FileLogger implements Logger
     {
         $this->ensureTypeExists($type);
         $this->ensurePathIsWritable($this->logFile->getPath());
-                
+        
         file_put_contents($this->logFile->getPath(), $this->format($message, $type), FILE_APPEND);
     }
 
@@ -39,16 +41,18 @@ class FileLogger implements Logger
     {
         $this->log($message, self::TYPE_ERROR);
     }
-    
-    private function format(string $message, string $type) {
+
+    private function format(string $message, string $type)
+    {
         $this->ensureTypeExists($type);
         $now = new \DateTime();
         
         return date(DATE_RSS, $now->getTimestamp()) . $type . ': ' . $message . "\n";
     }
-        
-    private function ensureTypeExists(string $type) {
-        if(true !== defined('self::TYPE_' . $type)) {
+
+    private function ensureTypeExists(string $type)
+    {
+        if (true !== defined('self::TYPE_' . $type)) {
             throw new \Exception('Log type unknown: ' . $type);
         }
     }

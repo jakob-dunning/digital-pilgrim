@@ -1,7 +1,6 @@
 <?php
+declare(strict_types = 1);
 namespace App\Library;
-
-use App\ValueObject\File;
 
 trait Ensure
 {
@@ -57,8 +56,10 @@ trait Ensure
     private function ensureIsValidUrl(string $url)
     {
         $path = parse_url($url, PHP_URL_PATH);
-        $encoded_path = array_map('urlencode', explode('/', $path));
-        $url = str_replace($path, implode('/', $encoded_path), $url);
+        if (false === is_null($path)) {
+            $encoded_path = array_map('urlencode', explode('/', $path));
+            $url = str_replace($path, implode('/', $encoded_path), $url);
+        }
         
         if (false === filter_var($url, FILTER_VALIDATE_URL)) {
             throw new \Exception('Not a valid url: ' . $url);

@@ -9,24 +9,18 @@ use App\ValueObject\File;
 use App\Service\Storage\FilestorageService;
 use App\Service\ScraperService;
 use App\ValueObject\Path;
-use App\Service\DomainService;
 
 class Factory
 {
 
     public function createPilgrim()
     {
-        return new Pilgrim($this->createFileLogger(), $this->createScraperService(), $this->createDomainService(), $this->createFileStorageService(), $this->createRepository());
+        return new Pilgrim($this->createFileLogger(), $this->createScraperService(), $this->createRepository());
     }
 
     public function createFileLogger()
     {
         return new FileLogger(File::createFromString(__DIR__ . '/../tmp/error.log'));
-    }
-
-    public function createDomainService()
-    {
-        return new DomainService($this->createFileStorageService(), $this->createFileLogger(), $this->createScraperService());
     }
 
     public function createFileStorageService(): StorageService
