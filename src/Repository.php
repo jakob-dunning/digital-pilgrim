@@ -20,64 +20,62 @@ class Repository
 
     public function getScraperQueue(): UrlQueue
     {
-        $values = json_decode((string) $this->storageService->get('scraperQueue'), true);
-        $urlQueue = UrlQueue::createFromArray($values);
-        
-        return $urlQueue;
+        return UrlQueue::createFromArray($this->get('scraperQueue'));
     }
 
     public function getCurrentDomain(): Url
     {
-        return Url::createFromString((string) $this->storageService->get('currentDomain'));
+        return Url::createFromString($this->get('currentDomain'));
     }
 
     public function getScraperHistory(): UrlCollection
     {
-        $values = json_decode((string) $this->storageService->get('scraperHistory'), true);
-        $urlCollection = UrlCollection::createFromArray($values);
-        
-        return $urlCollection;
+        return UrlCollection::createFromArray($this->get('scraperHistory'));
     }
 
     public function getDomainHistory(): UrlCollection
     {
-        $values = json_decode((string) $this->storageService->get('domainHistory'), true);
-        $urlCollection = UrlCollection::createFromArray($values);
-        
-        return $urlCollection;
+        return UrlCollection::createFromArray($this->get('domainHistory'));
     }
 
     public function getDestinations(): UrlCollection
     {
-        $values = json_decode((string) $this->storageService->get('destinations'), true);
-        $urlList = UrlCollection::createFromArray($values);
-        
-        return $urlList;
+        return UrlCollection::createFromArray($this->get('destinations'));
     }
 
     public function setDestinations(UrlCollection $destinations)
     {
-        $this->storageService->put(FileStorageItem::create('destinations', json_encode($destinations)));
+        $this->set('destinations', $destinations);  
     }
 
     public function setScraperHistory(UrlCollection $scraperHistory)
     {
-        $this->storageService->put(FileStorageItem::create('scraperHistory', json_encode($scraperHistory)));
+        $this->set('scraperHistory', $scraperHistory);
     }
-    
+
     public function setDomainHistory(UrlCollection $domainHistory)
     {
-        $this->storageService->put(FileStorageItem::create('domainHistory', json_encode($domainHistory)));
+        $this->set('domainHistory', $domainHistory);
     }
 
     public function setScraperQueue(UrlQueue $scraperQueue)
     {
-        $this->storageService->put(FileStorageItem::create('scraperQueue', json_encode($scraperQueue)));
+        $this->set('scraperQueue', $scraperQueue);
     }
 
     public function setCurrentDomain(Url $url)
     {
-        $this->storageService->put(FileStorageItem::create('currentDomain', (string) $url));
+        $this->set('currentDomain', $url);
+    }
+
+    private function get(string $key)
+    {
+        return json_decode((string) $this->storageService->get($key), true);
+    }
+
+    private function set(string $key, \JsonSerializable $data)
+    {
+        $this->storageService->put(FileStorageItem::create($key, json_encode($data)));
     }
 }
 

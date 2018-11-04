@@ -13,8 +13,8 @@ fi
 
 echo 'Resetting fileStorage ...'
 URL=$1
-printf $URL > fileStorage/currentDomain
-printf '[]' > fileStorage/destinations
-printf '[]' > fileStorage/domainHistory
-printf '[]' > fileStorage/scraperHistory
-printf [\"$URL\"] | sed 's/\//\\\//g' > fileStorage/scraperQueue
+printf \"$URL\" | sed 's/\//\\\//g' > fileStorage/currentDomain.json
+printf '[]' > fileStorage/destinations.json
+printf '[]' > fileStorage/domainHistory.json
+printf '[]' > fileStorage/scraperHistory.json
+printf [\"$URL\"] | sed 's/\//\\\//g' > fileStorage/scraperQueue.json

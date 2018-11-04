@@ -1,9 +1,8 @@
 /vendor/
-/tmp/*
+/tmp/
+/fileStorage/
 /config/config.ini
 
 /.buildpath
 /.project
 /.settings/
-
-!/tmp/error.log

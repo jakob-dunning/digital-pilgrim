@@ -1,12 +1,11 @@
 <?php
 namespace App\Service\Storage;
 
-use App\Service\Storage\StorageService;
-use App\ValueObject\Path;
-use App\ValueObject\StorageItem\StorageItem;
 use App\Library\Ensure;
 use App\Library\Logger\Logger;
+use App\ValueObject\Path;
 use App\ValueObject\StorageItem\FileStorageItem;
+use App\ValueObject\StorageItem\StorageItem;
 
 class FilestorageService implements StorageService
 {
@@ -24,8 +23,8 @@ class FilestorageService implements StorageService
 
     public function put(StorageItem $storageItem)
     {
-        $filePath = (string) $this->storageFolder . $storageItem->getKey();
-        $tmpFilePath = (string) $this->storageFolder . '~' . $storageItem->getKey();
+        $filePath = (string) $this->storageFolder . $storageItem->getKey() . '.json';
+        $tmpFilePath = (string) $this->storageFolder . '~' . $storageItem->getKey() . '.json';
         
         $this->ensurePathIsWritable($this->storageFolder);
 
@@ -45,8 +44,8 @@ class FilestorageService implements StorageService
 
     public function get(string $key): ?StorageItem
     {
-        $filePath = (string) $this->storageFolder . $key;
-        $tmpFilePath = (string) $this->storageFolder . '~' . $key;
+        $filePath = (string) $this->storageFolder . $key . '.json';
+        $tmpFilePath = (string) $this->storageFolder . '~' . $key . '.json';
         
         try {
             $this->ensureFileIsReadable($filePath);
