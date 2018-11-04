@@ -64,24 +64,26 @@ class ScraperService
         
         $urlCollection = UrlCollection::create();
         
-        foreach ($matches[1] as $match) {
-            if (true === $this->containsUnDesiredScheme($match)) {
+        foreach ($matches[1] as $url) {
+            $url = $this->removeNamedAnchor($url);
+            
+            if (true === $this->containsUnDesiredScheme($url)) {
                 continue;
             }
             
-            if (true === $this->isFile($match)) {
+            if (true === $this->isFile($url)) {
                 continue;
             }
             
-            if (true === $this->isMailToLink($match)) {
+            if (true === $this->isMailToLink($url)) {
                 continue;
             }
             
-            if (false === $this->containsScheme($match)) {
-                $match = $this->addDomain($match, $currentDomain);
+            if (false === $this->containsScheme($url)) {
+                $url = $this->addDomain($url, $currentDomain);
             }
             try {
-                $urlCollection->add(Url::createFromString($match));
+                $urlCollection->add(Url::createFromString($url));
             } catch (\Exception $e) {
                 $this->logger->error('Could not create Url: ' . $e);
             }
@@ -121,6 +123,8 @@ class ScraperService
 
     private function isFile(string $url)
     {
+        $url = $this->removeQueryString($url);
+        
         $positionOfLastDot = strrpos($url, '.');
         $charactersAfterLastDot = strlen($url) - $positionOfLastDot - 1;
         
@@ -150,6 +154,22 @@ class ScraperService
         }
         
         return false;
+    }
+    
+    private function removeQueryString(string $url) : string {
+        if(strpos($url, '?') !== false) {
+            $url = strstr($url, '?', true);
+        }
+        
+        return $url;
+    }
+    
+    private function removeNamedAnchor(string $url) : string {
+        if(strpos($url, '#') !== false) {
+            $url = strstr($url, '#', true);
+        }
+        
+        return $url;
     }
 }
 
