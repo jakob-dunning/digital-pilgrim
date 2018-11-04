@@ -56,6 +56,7 @@ class ScraperService
         $curl = curl_init((string) $url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT_MS, 500);
         // timeout? or no redirects?
         $response = curl_exec($curl);
         
