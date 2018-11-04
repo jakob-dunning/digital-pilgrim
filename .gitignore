@@ -1,5 +1,6 @@
 /vendor/
 /tmp/*
+/config/config.ini
 
 /.buildpath
 /.project
