@@ -1,6 +1,8 @@
 /vendor/
-/tmp/
+/tmp/*
 
 /.buildpath
 /.project
 /.settings/
+
+!/tmp/error.log
