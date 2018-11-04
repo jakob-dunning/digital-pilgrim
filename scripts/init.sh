@@ -8,13 +8,22 @@ fi
 
 if [ $# -eq 0 ]
 	then
-		echo 'Missing argument: Url'
+		echo 'Missing argument: Start url'
+		exit 1
 fi
 
-echo 'Resetting fileStorage ...'
 URL=$1
+
+echo 'Creating fileStorage ...'
+mkdir fileStorage
 printf $URL > fileStorage/currentDomain
 printf '[]' > fileStorage/destinations
 printf '[]' > fileStorage/domainHistory
 printf '[]' > fileStorage/scraperHistory
 printf [\"$URL\"] | sed 's/\//\\\//g' > fileStorage/scraperQueue
+
+echo 'Creating error log ...'
+mkdir tmp
+touch tmp/error.log
+
+exit 0
