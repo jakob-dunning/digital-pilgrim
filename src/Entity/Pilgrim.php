@@ -57,7 +57,7 @@ class Pilgrim
         try {
             $destination = $this->destinations->getRandom();
         } catch (\Exception $e) {
-            $destination = $this->domainHistory->getPrevious();
+            $destination = $this->domainHistory->getLast();
         }
         $this->setNewDestination($destination);
         $this->persist();

@@ -13,12 +13,12 @@ use App\ValueObject\Path;
 class Factory
 {
 
-    public function createPilgrim()
+    public function createPilgrim() : Pilgrim
     {
         return new Pilgrim($this->createFileLogger(), $this->createScraperService(), $this->createRepository());
     }
 
-    public function createFileLogger()
+    public function createFileLogger() : FileLogger
     {
         return new FileLogger(File::createFromString(__DIR__ . '/../tmp/error.log'));
     }
@@ -28,12 +28,12 @@ class Factory
         return new FilestorageService(Path::createFromString(__DIR__ . '/../fileStorage/'), $this->createFileLogger());
     }
 
-    public function createScraperService()
+    public function createScraperService() : ScraperService
     {
         return new ScraperService($this->createFileLogger());
     }
 
-    public function createRepository()
+    public function createRepository() : Repository
     {
         return new Repository($this->createFileStorageService());
     }

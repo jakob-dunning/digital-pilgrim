@@ -13,7 +13,7 @@ class PathTest extends TestCase
 
     public function testCreateFromStringReturnsObjectWithExistingPath()
     {
-        $pathString = __DIR__ . '/../resources/';
+        $pathString = __DIR__ . '/../../resources/';
         $path = Path::createFromString($pathString);
         
         $this->assertInstanceOf(Path::class, $path);
@@ -22,7 +22,7 @@ class PathTest extends TestCase
 
     public function testCreateFromStringThrowsExceptionWithNonexistentPath()
     {
-        $pathString = __DIR__ . '/../nonExistingFolder/';
+        $pathString = __DIR__ . '/../../nonExistingFolder/';
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Path could not be found: ' . $pathString);
         

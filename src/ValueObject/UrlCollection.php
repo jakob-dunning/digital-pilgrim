@@ -62,7 +62,7 @@ class UrlCollection implements \IteratorAggregate, \JsonSerializable
         return $this->store;
     }
 
-    public function getPrevious()
+    public function getLast()
     {
         $this->ensureIsNotEmptyArray($this->store);
         

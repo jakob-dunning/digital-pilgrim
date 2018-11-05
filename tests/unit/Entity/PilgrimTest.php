@@ -190,7 +190,7 @@ class PilgrimTest extends TestCase
             ->willThrowException(new \Exception());
         
         $this->domainHistoryMock->expects($this->once())
-            ->method('getPrevious')
+            ->method('getLast')
             ->willReturn(Url::createFromString($previousDestination));
         
         $this->domainHistoryMock->expects($this->once())

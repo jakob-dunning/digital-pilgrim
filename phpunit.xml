@@ -1,8 +1,9 @@
 <phpunit bootstrap="vendor/autoload.php"
-	forceCoversAnnotation="true">
+	forceCoversAnnotation="true" verbose="true">
 	<testsuites>
 		<testsuite name="Digital Pilgrim Tests">
 			<directory>tests</directory>
+			<directory>tests/</directory>
 		</testsuite>
 	</testsuites>
 	<filter>

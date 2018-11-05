@@ -13,7 +13,7 @@ class FileTest extends TestCase
 
     public function testCreateFromStringReturnsObjectWithExistingFile()
     {
-        $filePathString = __DIR__ . '/../resources/existingFile.txt';
+        $filePathString = __DIR__ . '/../../resources/existingFile.txt';
         $file = File::createFromString($filePathString);
         
         $this->assertInstanceOf(File::class, $file);
@@ -22,7 +22,7 @@ class FileTest extends TestCase
 
     public function testCreateFromStringThrowsExceptionWithNonexistentFile()
     {
-        $filePathString = __DIR__ . '/../resources/nonExistingFile.txt';
+        $filePathString = __DIR__ . '/../../resources/nonExistingFile.txt';
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Path could not be found: ' . $filePathString);
         

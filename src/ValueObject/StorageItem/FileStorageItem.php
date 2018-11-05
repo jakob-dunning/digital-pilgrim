@@ -1,7 +1,6 @@
 <?php
 namespace App\ValueObject\StorageItem;
 
-use App\ValueObject\StorageItem\StorageItem;
 use App\Library\Ensure;
 
 class FileStorageItem implements StorageItem
