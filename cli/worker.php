@@ -8,10 +8,11 @@ require_once (__DIR__ . '/../vendor/autoload.php');
 define('MAX_RUNTIME_SECONDS', 60);
 
 $factory = new Factory();
+$pilgrimController = $factory->createPilgrimController();
 $startTime = time();
+
 do {
-    $pilgrim = $factory->createPilgrim();
-    $pilgrim->run();
+    $pilgrimController->run();
 } while (time() - $startTime < MAX_RUNTIME_SECONDS);
  
 

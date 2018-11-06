@@ -2,21 +2,12 @@
 declare(strict_types = 1);
 namespace App\Entity;
 
-use App\Library\logger\Logger;
-use App\Service\ScraperService;
 use App\ValueObject\Url;
 use App\ValueObject\UrlCollection;
-use App\Repository;
 use App\ValueObject\UrlQueue;
 
 class Pilgrim
 {
-
-    private $logger;
-
-    private $scraperService;
-
-    private $repository;
 
     private $scraperQueue;
 
@@ -28,110 +19,63 @@ class Pilgrim
 
     private $destinations;
 
-    public function __construct(Logger $logger, ScraperService $scraperService, Repository $repository)
+    public function __construct(UrlQueue $scraperQueue, Url $currentDomain, UrlCollection $scraperHistorry, UrlCollection $destinations, UrlCollection $domainhistory)
     {
-        $this->logger = $logger;
-        $this->scraperService = $scraperService;
-        $this->repository = $repository;
-        $this->scraperQueue = $this->repository->getScraperQueue();
-        $this->currentDomain = $this->repository->getCurrentDomain();
-        $this->scraperHistory = $this->repository->getScraperHistory();
-        $this->destinations = $this->repository->getDestinations();
-        $this->domainHistory = $this->repository->getDomainHistory();
+        $this->scraperQueue = $scraperQueue;
+        $this->currentDomain = $currentDomain;
+        $this->scraperHistory = $scraperHistorry;
+        $this->destinations = $destinations;
+        $this->domainHistory = $domainhistory;
     }
 
-    public function run()
+    public function getScraperQueue(): UrlQueue
     {
-        if (false === $this->scraperQueue->isEmpty()) {
-            $currentUrl = $this->scraperQueue->dequeue();
-            
-            $scrapedUrls = $this->scraperService->extractUrls($currentUrl, $this->currentDomain);
-            $this->addUrlsToScraperQueue($this->extractLocalUrls($scrapedUrls));
-            $this->addUrlsToDestinations($this->extractExternalUrls($scrapedUrls));
-            
-            $this->scraperHistory->add($currentUrl);
-            $this->persist();
-            return;
-        }
-        
-        try {
-            $destination = $this->destinations->getRandom();
-        } catch (\Exception $e) {
-            $destination = $this->domainHistory->getLast();
-        }
-        $this->setNewDestination($destination);
-        $this->persist();
+        return $this->scraperQueue;
     }
 
-    private function persist()
+    public function setScraperQueue(UrlQueue $scraperQueue)
     {
-        $this->repository->setScraperQueue($this->scraperQueue);
-        $this->repository->setCurrentDomain($this->currentDomain);
-        $this->repository->setScraperHistory($this->scraperHistory);
-        $this->repository->setdomainHistory($this->domainHistory);
-        $this->repository->setDestinations($this->destinations);
+        $this->scraperQueue = $scraperQueue;
     }
 
-    private function setNewDestination(Url $destination)
+    public function getCurrentDomain(): Url
     {
-        $this->domainHistory->add($this->currentDomain);
-        $this->currentDomain = Url::createFromString($destination->getDomain());
-        $this->destinations = UrlCollection::create();
-        $this->scraperHistory = UrlCollection::create();
-        $this->scraperQueue = UrlQueue::createFromArray([
-            $destination->getDomain()
-        ]);
+        return $this->currentDomain;
     }
 
-    private function isLocalUrl(Url $url): bool
+    public function setCurrentDomain(Url $currentDomain)
     {
-        if (strpos((string) $url, (string) $this->currentDomain) === 0) {
-            return true;
-        }
-        
-        return false;
+        $this->currentDomain = $currentDomain;
     }
 
-    private function extractLocalUrls(UrlCollection $scrapedUrls): UrlCollection
+    public function getScraperHistory(): UrlCollection
     {
-        $localUrls = UrlCollection::create();
-        foreach ($scrapedUrls as $url) {
-            if (true === $this->isLocalUrl($url)) {
-                $localUrls->add($url);
-            }
-        }
-        
-        return $localUrls;
+        return $this->scraperHistory;
     }
 
-    private function extractExternalUrls(UrlCollection $scrapedUrls): UrlCollection
+    public function setScraperHistory(UrlCollection $scraperHistory)
     {
-        $externalUrls = UrlCollection::create();
-        foreach ($scrapedUrls as $url) {
-            if (false === $this->isLocalUrl($url)) {
-                $externalUrls->add($url);
-            }
-        }
-        
-        return $externalUrls;
+        $this->scraperHistory = $scraperHistory;
     }
 
-    private function addUrlsToScraperQueue(UrlCollection $urls)
+    public function getDomainHistory(): UrlCollection
     {
-        foreach ($urls as $url) {
-            if (false === $this->scraperQueue->contains($url) && false === $this->scraperHistory->contains($url)) {
-                $this->scraperQueue->enqueue($url);
-            }
-        }
+        return $this->domainHistory;
     }
 
-    private function addUrlsToDestinations(UrlCollection $urls)
+    public function setDomainHistory(UrlCollection $domainHistory)
     {
-        foreach ($urls as $url) {
-            if (false === $this->destinations->contains($url)) {
-                $this->destinations->add($url);
-            }
-        }
+        $this->domainHistory = $domainHistory;
+    }
+
+    public function getDestinations(): UrlCollection
+    {
+        return $this->destinations;
+    }
+
+    public function setDestinations(UrlCollection $destinations)
+    {
+        $this->destinations = $destinations;
     }
 }
 
