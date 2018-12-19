@@ -56,7 +56,7 @@ trait Ensure
     private function ensureIsValidUrl(string $url)
     {
         $path = parse_url($url, PHP_URL_PATH);
-        if (false === is_null($path)) {
+        if (false === is_null($path) && false !== $path) {
             $encoded_path = array_map('urlencode', explode('/', $path));
             $url = str_replace($path, implode('/', $encoded_path), $url);
         }
@@ -70,6 +70,12 @@ trait Ensure
     {
         if (count($array) === 0) {
             throw new \Exception('Array is empty');
+        }
+    }
+    
+    public function ensureArrayKeyExists(string $key, array $store ) {
+        if(false === key_exists($key, $store)) {
+            throw new \Exception('Array key does not exist: ' . $key);
         }
     }
 }

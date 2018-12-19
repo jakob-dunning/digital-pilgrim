@@ -62,6 +62,10 @@ class ScraperService
         // timeout? or no redirects?
         $response = curl_exec($curl);
         
+        if(false === $response) {
+            return UrlCollection::create();
+        }
+        
         preg_match_all('/<a [. ]*href=[\'\"](.*)[\'\" ]/U', $response, $matches, PREG_PATTERN_ORDER);
         
         $urlCollection = UrlCollection::create();

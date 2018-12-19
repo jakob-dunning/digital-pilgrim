@@ -6,7 +6,7 @@ use App\ValueObject\Url;
 use App\ValueObject\UrlCollection;
 use App\ValueObject\UrlQueue;
 
-class Pilgrim
+class Pilgrim implements \JsonSerializable
 {
 
     private $scraperQueue;
@@ -76,6 +76,17 @@ class Pilgrim
     public function setDestinations(UrlCollection $destinations)
     {
         $this->destinations = $destinations;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'scraperQueue' => $this->scraperQueue,
+            'scraperHistory' => $this->scraperHistory,
+            'domainHistory' => $this->domainHistory,
+            'currentDomain' => $this->currentDomain,
+            'destinations' => $this->destinations
+        ];
     }
 }
 

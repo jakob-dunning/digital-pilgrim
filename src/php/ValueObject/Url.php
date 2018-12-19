@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types = 1);
 namespace App\ValueObject;
 
@@ -42,6 +41,16 @@ class Url implements \JsonSerializable
     public function jsonSerialize()
     {
         return $this->value;
+    }
+    
+    public function getNormalized()
+    {
+        $host = parse_url($this->value, PHP_URL_HOST);
+        if(0 === strpos($host, '.www')) {
+            $host = substr($host, 4); 
+        }
+            
+        return 'http://' . $host; 
     }
 }
 

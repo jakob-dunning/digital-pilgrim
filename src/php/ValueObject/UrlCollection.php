@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types = 1);
 namespace App\ValueObject;
 
@@ -62,10 +61,30 @@ class UrlCollection implements \IteratorAggregate, \JsonSerializable
         return $this->store;
     }
 
-    public function getLast()
+    public function getLastBefore(Url $url)
     {
         $this->ensureIsNotEmptyArray($this->store);
         
-        return $this->store[count($this->store) - 1];
+        foreach ($this->store as $index => $domain) {
+            if($url->getDomain() === (string)$domain) {
+                return $this->store[$index -1];
+            }
+        }
+    }
+
+    public function containsNormalizedUrl(Url $url)
+    {
+        foreach ($this->store as $storedUrl) {
+            if ((string) $url->getNormalized() === (string) $storedUrl->getNormalized()) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
+    public function count(): int
+    {
+        return count($this->store);
     }
 }

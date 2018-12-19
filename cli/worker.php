@@ -5,7 +5,7 @@ namespace App\Cli;
 use App\Factory;
 require_once (__DIR__ . '/../vendor/autoload.php');
 
-define('MAX_RUNTIME_SECONDS', 60);
+define('MAX_RUNTIME_SECONDS', 600);
 
 $factory = new Factory();
 $pilgrimController = $factory->createPilgrimController();
