@@ -15,7 +15,7 @@ function getLastUrlsAsList (urls, limit) {
   let list = document.createElement('ul')
   list.setAttribute('class', 'list-group list-group-flush')
   
-  urls.forEach(function(url) {
+  urls.reverse().slice(0,limit).forEach(function(url) {
     let listItem = document.createElement('li');
     let anchor = document.createElement('a');
     anchor.setAttribute('href', url);
@@ -26,6 +26,18 @@ function getLastUrlsAsList (urls, limit) {
     
     list.appendChild(listItem);
   })
+  
+  console.log(limit-list.childNodes.length);
+
+
+  
+  for(let i=0; i<(limit-list.childNodes.length); i++) {
+    let listItem = document.createElement('li');
+    let lineBreak = document.createElement('br');
+    listItem.setAttribute('class', 'list-group-item list-group-item-primary');
+    listItem.appendChild(lineBreak);
+    list.appendChild(listItem);
+  }
     
   return list;
 }
@@ -35,8 +47,8 @@ $(document).ready(function () {
   let socket = new WebSocket('ws://localhost:8080');
   
   socket.onmessage = function(response) {
-
-  
+     let data = (JSON.parse(response.data));
+     
      $('#currentDomain .content').text(data.currentDomain);
      $('#scraperQueue .content').html(getLastUrlsAsList(data.scraperQueue, maxElementsInList));
      $('#scraperQueue .count').text(data.scraperQueue.length);
@@ -46,5 +58,6 @@ $(document).ready(function () {
      $('#domainHistory .count').text(data.domainHistory.length);
      $('#destinations .content').html(getLastUrlsAsList(data.destinations, maxElementsInList));
      $('#destinations .count').text(data.destinations.length);
+     console.log('---');
    } 
 });

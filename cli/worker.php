@@ -13,6 +13,7 @@ $startTime = time();
 
 do {
     $pilgrimController->run();
+    sleep(2);
 } while (time() - $startTime < MAX_RUNTIME_SECONDS);
  
 

@@ -46,8 +46,8 @@ class PilgrimController
             
             $this->pilgrim->getScraperHistory()->add($currentUrl);
             $this->pilgrimRepository->persist($this->pilgrim);
-            
-            if ($this->config->get('monitor.enabled')) {
+                        
+            if ($this->config->get('monitor.enabled') === '1') {
                 $this->sendToMonitor(json_encode($this->pilgrim));
             }
             

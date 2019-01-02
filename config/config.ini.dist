@@ -1,0 +1,7 @@
+[pilgrim]
+scraperqueue_max_size=5
+
+[monitor]
+enabled=true
+websocket_port=8080
+max_entries_in_lists=5

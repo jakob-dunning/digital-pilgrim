@@ -14,4 +14,3 @@ monitor:
 init:
 	yarn install
 	node node_modules/webpack-cli/bin/cli.js
-	script/init.sh

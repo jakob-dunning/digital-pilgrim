@@ -23,7 +23,12 @@ class Factory
 
     public function createPilgrimController()
     {
-        return new PilgrimController($this->createFileLogger(), $this->createScraperService(), $this->createPilgrimRepository(), $this->createWebSocketClient(), $this->createConfig());
+        return new PilgrimController(
+            $this->createFileLogger(),
+            $this->createScraperService(),
+            $this->createPilgrimRepository(),
+            $this->createWebSocketClient(),
+            $this->createConfig());
     }
 
     public function createFileLogger(): FileLogger
