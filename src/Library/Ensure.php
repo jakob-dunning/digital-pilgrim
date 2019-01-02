@@ -44,13 +44,13 @@ trait Ensure
 
     public function ensureDirExists(string $path)
     {
-        $this->ensurePathExists();
+        $this->ensurePathExists($path);
         $this->ensureIsDir($path);
     }
 
     private function ensureIsDir(string $path)
     {
-        if (is_dir() !== true) {
+        if (is_dir($path) !== true) {
             throw new \Exception('Location is not a directory: ' . $path);
         }
     }
