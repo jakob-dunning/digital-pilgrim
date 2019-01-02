@@ -11,7 +11,8 @@
 		"cboden/ratchet": "^0.4.1",
 		"textalk/websocket": "^1.2",
 		"squizlabs/php_codesniffer": "^3.4",
-		"slevomat/coding-standard": "^4.8"
+		"slevomat/coding-standard": "^4.8",
+		"phpstan/phpstan": "^0.10.7"
 	},
 	"autoload-dev": {
 		"psr-4": {

@@ -10,6 +10,7 @@ use App\ValueObject\UrlCollection;
 use App\ValueObject\UrlQueue;
 use App\Repository\PilgrimRepository;
 use App\Library\Config;
+use WebSocket;
 
 class PilgrimController
 {
@@ -155,7 +156,7 @@ class PilgrimController
     private function addUrlsToScraperQueue(UrlCollection $urls)
     {
         foreach ($urls as $url) {
-            if ($this->isDuplicate($url) === true) {
+            if ($this->isAlreadyKnownToScraper($url) === true) {
                 continue;
             }
             
@@ -163,10 +164,10 @@ class PilgrimController
         }
     }
 
-    private function isDuplicate(Url $url): bool
+    private function isAlreadyKnownToScraper(Url $url): bool
     {
-        return $this->pilgrim->getScraperQueue()->contains(
-            $url) !== false || $this->pilgrim->getScraperHistory()->contains($url) !== false;
+        return $this->pilgrim->getScraperQueue()->contains($url) !== false
+        || $this->pilgrim->getScraperHistory()->contains($url) !== false;
     }
 
     private function addUrlsToDestinations(UrlCollection $urls)
