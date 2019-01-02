@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7a57e37490e9ee77e091ebeb96d937a1",
-    "content-hash": "35d58d26c0b867a9555e81fd02093bec",
+    "hash": "018176840dfd424e28deee140a38e8c2",
+    "content-hash": "06d9c84f4d588bb436296ef5dc09e385",
     "packages": [
         {
             "name": "cboden/ratchet",
@@ -1904,6 +1904,96 @@
             "time": "2016-10-03 07:35:21"
         },
         {
+            "name": "slevomat/coding-standard",
+            "version": "4.8.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/slevomat/coding-standard.git",
+                "reference": "af0c0c99e84106525484ef25f15144b9831522bb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/af0c0c99e84106525484ef25f15144b9831522bb",
+                "reference": "af0c0c99e84106525484ef25f15144b9831522bb",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1",
+                "squizlabs/php_codesniffer": "^3.3.1"
+            },
+            "require-dev": {
+                "jakub-onderka/php-parallel-lint": "1.0.0",
+                "phing/phing": "2.16.1",
+                "phpstan/phpstan": "0.9.2",
+                "phpstan/phpstan-phpunit": "0.9.4",
+                "phpstan/phpstan-strict-rules": "0.9",
+                "phpunit/phpunit": "7.3.5"
+            },
+            "type": "phpcodesniffer-standard",
+            "autoload": {
+                "psr-4": {
+                    "SlevomatCodingStandard\\": "SlevomatCodingStandard"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Slevomat Coding Standard for PHP_CodeSniffer complements Consistence Coding Standard by providing sniffs with additional checks.",
+            "time": "2018-11-03 21:28:29"
+        },
+        {
+            "name": "squizlabs/php_codesniffer",
+            "version": "3.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
+                "reference": "379deb987e26c7cd103a7b387aea178baec96e48"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/379deb987e26c7cd103a7b387aea178baec96e48",
+                "reference": "379deb987e26c7cd103a7b387aea178baec96e48",
+                "shasum": ""
+            },
+            "require": {
+                "ext-simplexml": "*",
+                "ext-tokenizer": "*",
+                "ext-xmlwriter": "*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0"
+            },
+            "bin": [
+                "bin/phpcs",
+                "bin/phpcbf"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Greg Sherwood",
+                    "role": "lead"
+                }
+            ],
+            "description": "PHP_CodeSniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
+            "homepage": "http://www.squizlabs.com/php-codesniffer",
+            "keywords": [
+                "phpcs",
+                "standards"
+            ],
+            "time": "2018-12-19 23:57:18"
+        },
+        {
             "name": "symfony/http-foundation",
             "version": "v4.1.7",
             "source": {
@@ -2223,7 +2313,59 @@
             "time": "2018-01-29 19:49:41"
         }
     ],
-    "packages-dev": [],
+    "packages-dev": [
+        {
+            "name": "suin/phpcs-psr4-sniff",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/suin/phpcs-psr4-sniff.git",
+                "reference": "48ae7d95a7c82092527bd9c18f2431f62cae32da"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/suin/phpcs-psr4-sniff/zipball/48ae7d95a7c82092527bd9c18f2431f62cae32da",
+                "reference": "48ae7d95a7c82092527bd9c18f2431f62cae32da",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": ">=7.1 <7.4.0",
+                "slevomat/coding-standard": ">=4.7 <5.0.0",
+                "squizlabs/php_codesniffer": ">=3.3 <4.0.0"
+            },
+            "type": "phpcodesniffer-standard",
+            "autoload": {
+                "psr-0": {
+                    "Suin\\Sniffs\\Classes\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "suin",
+                    "email": "suinyeze@gmail.com",
+                    "homepage": "https://github.com/suin",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP_CodeSniffer sniff that checks class name matches PSR-4 project structure.",
+            "homepage": "https://github.com/suin/php",
+            "keywords": [
+                "PSR-4",
+                "coding-standards",
+                "coding-style",
+                "namespace",
+                "php-codesniffer",
+                "phpcs",
+                "static-analysis"
+            ],
+            "time": "2018-12-05 09:12:46"
+        }
+    ],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": [],

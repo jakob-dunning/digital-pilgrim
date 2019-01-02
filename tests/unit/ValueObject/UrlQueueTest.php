@@ -51,7 +51,7 @@ class UrlQueueTest extends TestCase
         $urlArray = [
             Url::createFromString('https://www.taz.de'),
             Url::createFromString('https://www.zeit.de'),
-            Url::createFromString('https://www.bild.de'),
+            Url::createFromString('https://www.bild.de')
         ];
         $urlQueue = UrlQueue::create();
         foreach ($urlArray as $url) {
@@ -79,7 +79,7 @@ class UrlQueueTest extends TestCase
         
         $this->assertEquals(Url::createFromString($firstUrlString), $firstUrl);
     }
-    
+
     public function testDeQueue()
     {
         $firstUrlString = 'https://www.google.de';
@@ -95,15 +95,19 @@ class UrlQueueTest extends TestCase
         $this->assertEquals(Url::createFromString($firstUrlString), $firstUrl);
         $this->assertCount(2, $urlQueue->getIterator());
     }
-    
-    public function testIsEmptyReturnsTrue() {
+
+    public function testIsEmptyReturnsTrue()
+    {
         $urlQueue = UrlQueue::create();
         
         $this->assertTrue($urlQueue->isEmpty());
     }
-    
-    public function testIsEmptyReturnsFalse() {
-        $urlQueue = UrlQueue::createFromArray(['https://www.aldis-rache.de/bonsai/']);
+
+    public function testIsEmptyReturnsFalse()
+    {
+        $urlQueue = UrlQueue::createFromArray([
+            'https://www.aldis-rache.de/bonsai/'
+        ]);
         
         $this->assertFalse($urlQueue->isEmpty());
     }

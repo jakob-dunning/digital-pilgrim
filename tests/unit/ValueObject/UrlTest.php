@@ -16,11 +16,11 @@ class UrlTest extends TestCase
      */
     public function testCreateFromStringReturnsObjectWithValidUrl(string $urlString)
     {
-;
+        ;
         $url = Url::createFromString($urlString);
         
         $this->assertInstanceOf(Url::class, $url);
-        $this->assertSame($urlString, (string)$url);
+        $this->assertSame($urlString, (string) $url);
     }
 
     /**
@@ -34,29 +34,33 @@ class UrlTest extends TestCase
         
         Url::createFromString($urlString);
     }
-    
-    public function testGetDomain() {
+
+    public function testGetDomain()
+    {
         $urlString = 'http://sahnekuchen.xxx/bierbauch/d.html';
         $url = Url::createFromString($urlString);
         
         $this->assertSame('http://sahnekuchen.xxx', $url->getDomain());
     }
-    
-    public function testGetHost() {
+
+    public function testGetHost()
+    {
         $urlString = 'http://sahnekuchen.xxx/bierbauch/d.html';
         $url = Url::createFromString($urlString);
         
         $this->assertSame('sahnekuchen.xxx', $url->getHost());
     }
-    
-    public function testJsonSerialize() {
+
+    public function testJsonSerialize()
+    {
         $urlString = 'http://sahnekuchen.xxx/bierbauch/d.html';
         $url = Url::createFromString($urlString);
         
         $this->assertSame('"http:\/\/sahnekuchen.xxx\/bierbauch\/d.html"', json_encode($url));
     }
-    
-    public function validUrlDataProvider() {
+
+    public function validUrlDataProvider()
+    {
         return [
             [
                 'http://www.ccc.de'
@@ -75,12 +79,13 @@ class UrlTest extends TestCase
             ],
             [
                 'ftp://schnack.com/manta'
-            ],
-            
+            ]
+        
         ];
     }
-    
-    public function invalidUrlDataProvider() {
+
+    public function invalidUrlDataProvider()
+    {
         return [
             [
                 'lkjadslk'
@@ -96,7 +101,7 @@ class UrlTest extends TestCase
             ],
             [
                 '://sdsd.com'
-            ],
+            ]
         ];
     }
 }

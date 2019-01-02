@@ -15,42 +15,42 @@ use App\Service\ScraperService;
  */
 class FactoryTest extends TestCase
 {
-    
+
     private $subject;
-    
+
     public function setUp()
     {
         $this->subject = new Factory();
     }
-    
+
     public function testCreatePilgrim()
     {
         $pilgrim = $this->subject->createPilgrim();
         
         $this->assertInstanceOf(Pilgrim::class, $pilgrim);
     }
-    
+
     public function testCreateFileLogger()
     {
         $fileLogger = $this->subject->createFileLogger();
         
         $this->assertInstanceOf(FileLogger::class, $fileLogger);
     }
-    
+
     public function testCreateFileStorageService()
     {
         $fileStorageService = $this->subject->createFileStorageService();
         
         $this->assertInstanceOf(FilestorageService::class, $fileStorageService);
     }
-    
+
     public function testCreateRepository()
     {
         $repository = $this->subject->createRepository();
         
         $this->assertInstanceOf(Repository::class, $repository);
     }
-    
+
     public function testCreateScraperService()
     {
         $scraperService = $this->subject->createScraperService();

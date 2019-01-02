@@ -111,10 +111,11 @@ class RepositoryTest extends TestCase
     public function testSetScraperHistory()
     {
         $key = 'scraperHistory';
-        $scraperHistory = UrlCollection::createFromArray([
-            'http://www.ccc.de',
-            'http://www.bier.de'
-        ]);
+        $scraperHistory = UrlCollection::createFromArray(
+            [
+                'http://www.ccc.de',
+                'http://www.bier.de'
+            ]);
         $this->storageServiceMock->expects($this->once())
             ->method('put')
             ->with(FileStorageItem::create($key, json_encode($scraperHistory)));
@@ -125,10 +126,11 @@ class RepositoryTest extends TestCase
     public function testSetDestinations()
     {
         $key = 'destinations';
-        $destinations = UrlCollection::createFromArray([
-            'http://www.ccc.de',
-            'http://www.bier.de'
-        ]);
+        $destinations = UrlCollection::createFromArray(
+            [
+                'http://www.ccc.de',
+                'http://www.bier.de'
+            ]);
         $this->storageServiceMock->expects($this->once())
             ->method('put')
             ->with(FileStorageItem::create($key, json_encode($destinations)));
@@ -139,10 +141,11 @@ class RepositoryTest extends TestCase
     public function testSetScraperQueue()
     {
         $key = 'scraperQueue';
-        $scraperQueue = UrlQueue::createFromArray([
-            'http://www.ccc.de',
-            'http://www.bier.de'
-        ]);
+        $scraperQueue = UrlQueue::createFromArray(
+            [
+                'http://www.ccc.de',
+                'http://www.bier.de'
+            ]);
         $this->storageServiceMock->expects($this->once())
             ->method('put')
             ->with(FileStorageItem::create($key, json_encode($scraperQueue)));
@@ -153,10 +156,11 @@ class RepositoryTest extends TestCase
     public function testSetDomainHistory()
     {
         $key = 'domainHistory';
-        $domainHistory = UrlCollection::createFromArray([
-            'http://www.ccc.de',
-            'http://www.bier.de'
-        ]);
+        $domainHistory = UrlCollection::createFromArray(
+            [
+                'http://www.ccc.de',
+                'http://www.bier.de'
+            ]);
         $this->storageServiceMock->expects($this->once())
             ->method('put')
             ->with(FileStorageItem::create($key, json_encode($domainHistory)));

@@ -1,7 +1,6 @@
 /vendor/
 /tmp/
 /fileStorage/
-/node_modules/
 /config/config.ini
 
 /.buildpath

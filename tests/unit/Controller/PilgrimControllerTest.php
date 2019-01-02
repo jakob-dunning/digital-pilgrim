@@ -29,13 +29,14 @@ class PilgrimControllerTest extends TestCase
     {
         $this->currentDomainMock->method('__toString')->willReturn('http://www.haxenGammel.de');
         $currentUrlMock = Url::createFromString('http://www.haxenGammel.de');
-        $scrapedUrlsMock = UrlCollection::createFromArray([
-            'http://www.haxenGammel.de/wurst',
-            'http://www.haxenGammel.de/mett/',
-            'http://www.wurstWaren.de/geil',
-            'http://www.haxenGammel.de/räucherKatze/ingo.html',
-            'https://neineinneinnein.org'
-        ]);
+        $scrapedUrlsMock = UrlCollection::createFromArray(
+            [
+                'http://www.haxenGammel.de/wurst',
+                'http://www.haxenGammel.de/mett/',
+                'http://www.wurstWaren.de/geil',
+                'http://www.haxenGammel.de/räucherKatze/ingo.html',
+                'https://neineinneinnein.org'
+            ]);
         $this->scraperQueueMock->expects($this->once())
             ->method('isEmpty')
             ->willReturn(false);
