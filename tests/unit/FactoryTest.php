@@ -4,11 +4,10 @@ namespace Tests;
 
 use PHPUnit\Framework\TestCase;
 use App\Factory;
-use App\Entity\Pilgrim;
 use App\Library\Logger\FileLogger;
 use App\Service\Storage\FilestorageService;
-use App\Repository;
 use App\Service\ScraperService;
+use App\Repository\PilgrimRepository;
 
 /**
  * @covers App\Factory
@@ -23,11 +22,11 @@ class FactoryTest extends TestCase
         $this->subject = new Factory();
     }
 
-    public function testCreatePilgrim()
+    public function testCreatePilgrimRepository()
     {
-        $pilgrim = $this->subject->createPilgrim();
+        $pilgrim = $this->subject->createPilgrimRepository();
         
-        $this->assertInstanceOf(Pilgrim::class, $pilgrim);
+        $this->assertInstanceOf(PilgrimRepository::class, $pilgrim);
     }
 
     public function testCreateFileLogger()
@@ -42,13 +41,6 @@ class FactoryTest extends TestCase
         $fileStorageService = $this->subject->createFileStorageService();
         
         $this->assertInstanceOf(FilestorageService::class, $fileStorageService);
-    }
-
-    public function testCreateRepository()
-    {
-        $repository = $this->subject->createRepository();
-        
-        $this->assertInstanceOf(Repository::class, $repository);
     }
 
     public function testCreateScraperService()

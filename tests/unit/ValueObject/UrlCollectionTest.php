@@ -84,21 +84,5 @@ class UrlCollectionTest extends TestCase
         $this->assertInstanceOf(Url::class, $randomUrl);
         $this->assertTrue(in_array((string) $randomUrl, $urlStringArray, true));
     }
-
-    public function testGetLast()
-    {
-        $urlStringArray = [
-            'https://www.taz.de',
-            'https://www.zeit.de',
-            'https://www.bild.de'
-        ];
-        $urlCollection = UrlCollection::createFromarray($urlStringArray);
-        
-        $this->assertEquals(Url::createFromString('https://www.bild.de'), $urlCollection->getLast());
-        
-        $urlCollection->add(Url::createFromString('http://www.neuezuericher.de'));
-        
-        $this->assertEquals(Url::createFromString('http://www.neuezuericher.de'), $urlCollection->getLast());
-    }
 }
 
